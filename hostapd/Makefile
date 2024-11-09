@@ -165,6 +165,15 @@ OBJS += ../src/common/hw_features_common.o
 
 OBJS += ../src/eapol_auth/eapol_auth_sm.o
 
+# TODO testing
+CONFIG_UBUS=y
+
+ifdef CONFIG_UBUS
+CFLAGS += -DUBUS_SUPPORT
+CFLAGS += -Wno-discarded-qualifiers -Wno-unused-variable -Wno-tautological-compare -Wno-parentheses -Wno-return-type -Wno-maybe-uninitialized
+OBJS += ../src/ap/ubus.o
+LIBS += -lubox -lubus -lblobmsg_json
+endif
 
 ifdef CONFIG_CODE_COVERAGE
 CFLAGS += -O0 -fprofile-arcs -ftest-coverage

@@ -173,6 +173,16 @@ ifdef CONFIG_EAPOL_TEST
 CFLAGS += -Werror -DEAPOL_TEST
 endif
 
+# TODO testing
+CONFIG_UBUS=y
+
+ifdef CONFIG_UBUS
+CFLAGS += -DUBUS_SUPPORT
+CFLAGS += -Wno-discarded-qualifiers -Wno-unused-variable -Wno-tautological-compare -Wno-parentheses -Wno-return-type -Wno-maybe-uninitialized
+OBJS += ubus.o
+LIBS += -lubox -lubus -lblobmsg_json
+endif
+
 ifdef CONFIG_CODE_COVERAGE
 CFLAGS += -O0 -fprofile-arcs -ftest-coverage
 LIBS += -lgcov
@@ -947,6 +957,9 @@ OBJS += ../src/ap/fils_hlp.o
 endif
 ifdef CONFIG_CTRL_IFACE
 OBJS += ../src/ap/ctrl_iface_ap.o
+ifdef CONFIG_UBUS
+OBJS += ../src/ap/ubus.o
+endif
 endif
 
 CFLAGS += -DEAP_SERVER -DEAP_SERVER_IDENTITY
